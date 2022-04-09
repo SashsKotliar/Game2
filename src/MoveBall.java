@@ -1,21 +1,25 @@
+import java.util.ArrayList;
 
 public class MoveBall extends MyRunnable {
-    private static final int SPEED=4;
 
 
     public MoveBall(PlayPanel myPlay) {
-        super(myPlay,SPEED);
+        super(myPlay);
     }
 
     @Override
     public void _run() {
-        for (Ball ball : myPlay.getComputerBall()) {
-            myPlay.moveBall(ball);
+        ArrayList<Ball> balls = myPlay.getComputerBall();
+        synchronized (balls) {
+            for (Ball ball : myPlay.getComputerBall()) {
+                myPlay.moveBall(ball);
+            }
+            myPlay.getComputerBall().removeIf(ball -> ball.getWidth() == 0);
+            if (myPlay.getComputerBall().size() <= 0) {
+                myPlay.addLastBall();
+            }
+            this.myPlay.repaint();
         }
-        if (myPlay.getComputerBall().size()<=1){
-            myPlay.getComputerBall().add(myPlay.randomBall());
-        }
-        this.myPlay.repaint();
     }
 
 }

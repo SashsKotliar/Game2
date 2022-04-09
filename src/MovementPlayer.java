@@ -1,14 +1,17 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Stack;
 
 public class MovementPlayer implements KeyListener {
     private Cannon player;
 
+    private Stack<Integer> pressedKeys = new Stack<>();
+    private static final int ZERO = (KeyEvent.VK_LEFT + KeyEvent.VK_RIGHT) / 2;
 
 
     public MovementPlayer(Cannon player) {
         this.player = player;
-
+        pressedKeys.push(ZERO);
     }
 
     public void keyTyped(KeyEvent e) {
@@ -16,16 +19,20 @@ public class MovementPlayer implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_RIGHT:
-                this.player.setDirection(Cannon.RIGHT);
-                break;
-            case KeyEvent.VK_LEFT:
-                this.player.setDirection(Cannon.LEFT);
-                break;
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT) {
+            if (!pressedKeys.contains(keyCode))
+                pressedKeys.push(keyCode);
         }
     }
 
     public void keyReleased(KeyEvent e) {
+        Integer keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT)
+            pressedKeys.remove(keyCode);
+    }
+
+    public int getDirection() {
+        return pressedKeys.peek() - ZERO;
     }
 }

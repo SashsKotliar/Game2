@@ -9,23 +9,31 @@ public abstract class ShapeDefined {
     private Color color;
 
 
-    public ShapeDefined(int x, int y, int w, int h,Color color){
-        this.x=x;
-        this.y=y;
-        this.w=w;
-        this.h=h;
-        this.color=color;
+    public ShapeDefined(int x, int y, int w, int h, Color color) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.color = color;
     }
-    public void moveRight(){
-        this.x++;
+
+    public void moveRight() {
+        this.x += Const.SPEED_PLAYER;
     }
-    public void moveLeft(){
-        this.x--;
+
+    public void moveLeft() {
+        this.x -= Const.SPEED_PLAYER;
     }
-    public void moveUp(){
+
+    public void moveUp() {
         this.y--;
     }
-    public void moveDown(){
+
+    public void moveUp(int distance) {
+        this.y -= distance;
+    }
+
+    public void moveDown() {
         this.y++;
     }
 
@@ -68,5 +76,6 @@ public abstract class ShapeDefined {
     public void setColor(Color color) {
         this.color = color;
     }
+
     public abstract void paint(Graphics graphics);
 }

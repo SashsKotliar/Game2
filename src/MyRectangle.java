@@ -1,4 +1,5 @@
 import java.awt.*;
+
 public class MyRectangle {
     private int x;
     private int y;
@@ -20,15 +21,19 @@ public class MyRectangle {
     }
 
     public void moveRight() {
-        this.x++;
+        this.x += Const.SPEED_PLAYER;
     }
 
     public void moveLeft() {
-        this.x--;
+        this.x -= Const.SPEED_PLAYER;
     }
 
     public void moveUp() {
         this.y--;
+    }
+
+    public void moveUp(int distance) {
+        this.y -= distance;
     }
 
     public int getX() {
@@ -49,5 +54,9 @@ public class MyRectangle {
 
     public int getHeight() {
         return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }

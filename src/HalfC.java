@@ -23,14 +23,48 @@ public class HalfC {
         graphics.setColor(this.color);
         graphics.fillArc(this.x, this.y, this.width, this.height, this.statAngle, this.andAngle);
     }
-    public void moveRight () {
-        this.x++;
+
+    public void moveRight() {
+        this.x += Const.SPEED_PLAYER;
     }
 
-    public void moveLeft () {
-        this.x--;
+    public void moveLeft() {
+        this.x -= Const.SPEED_PLAYER;
     }
-    public void moveUp() {
-        this.y--;
+
+    public void moveUp(int distance) {
+        this.y -= distance;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getStatAngle() {
+        return statAngle;
+    }
+
+    public int getAndAngle() {
+        return andAngle;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setX(int i) {
+        x = i;
     }
 }

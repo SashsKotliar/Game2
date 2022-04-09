@@ -1,34 +1,39 @@
 public class MovePlayer extends MyRunnable {
-    private static final  int SPEED=2;
     private MovementPlayer movementPlayer;
     private Cannon cannon;
+    private boolean touching = false;
 
     public MovePlayer(PlayPanel playPanel, Cannon myCannon) {
-        super(playPanel,SPEED);
+        super(playPanel);
         this.cannon = myCannon;
+
+
+        movementPlayer = new MovementPlayer(this.cannon);
+        myPlay.setFocusable(true);
+        myPlay.setVisible(true);
+        myPlay.requestFocus();
+        myPlay.addKeyListener(movementPlayer);
     }
 
     @Override
     public void _run() {
-        MovementPlayer movement = new MovementPlayer(this.cannon);
-        myPlay.setFocusable(true);
-        myPlay.setVisible(true);
-        myPlay.requestFocus();
-        myPlay.addKeyListener(movement);
-        switch (this.cannon.getDirection()) {
-            case Cannon.RIGHT:
-                cannon.moveRight();
-                if (cannon.getBodyX() == 495) {
-                    cannon.moveLeft();
-                }
+        cannon.moveTo(movementPlayer.getDirection());
+        boolean lost = false;
+        for (Ball ball : this.myPlay.getComputerBall()) {
+            if (this.myPlay.getCannon().checkCollision(ball)) {
+                lost = true;
                 break;
-            case Cannon.LEFT:
-                cannon.moveLeft();
-                if (cannon.getBodyX() == 40) {
-                    cannon.moveRight();
-                }
-                break;
-
+            }
+        }
+        if (lost) {
+            if (!touching) {
+                myPlay.getCannon().lost(this.myPlay.getLife());
+                this.myPlay.setLife(this.myPlay.getLife() + 1);
+            }
+            this.touching = true;
+        } else this.touching = false;
+        if (this.myPlay.getLife() >= 3) {
+            this.myPlay.stop();
         }
     }
 }

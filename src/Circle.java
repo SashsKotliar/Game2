@@ -60,11 +60,28 @@ public class Circle {
         graphics.fillOval(this.x, this.y, this.width, this.height);
     }
 
+    private int getNewDimension(int num) {
+        return (num > 40) ? num / 5 : 0;
+    }
+
+    public void raiseABallW() {
+        this.width = getNewDimension(this.width);
+    }
+
+    public void raiseABallH() {
+        this.height = getNewDimension(this.height);
+    }
+
     public void moveRight() {
-        this.x++;
+        this.x +=Const.SPEED_PLAYER;
     }
 
     public void moveLeft() {
-        this.x--;
+        this.x -=Const.SPEED_PLAYER;
     }
+
+    public void moveDown() {
+        this.y++;
+    }
+
 }
