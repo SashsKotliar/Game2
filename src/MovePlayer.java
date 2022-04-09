@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class MovePlayer extends MyRunnable {
     private MovementPlayer movementPlayer;
     private Cannon cannon;
@@ -18,20 +20,28 @@ public class MovePlayer extends MyRunnable {
     @Override
     public void _run() {
         cannon.moveTo(movementPlayer.getDirection());
+        ArrayList<Ball> balls = this.myPlay.getComputerBall();
         boolean lost = false;
-        for (Ball ball : this.myPlay.getComputerBall()) {
-            if (this.myPlay.getCannon().checkCollision(ball)) {
-                lost = true;
-                break;
+        synchronized (balls) {
+            for (Ball ball : balls) {
+                if (this.myPlay.getCannon().checkCollision(ball)) {
+                    lost = true;
+                    break;
+                }
             }
         }
         if (lost) {
             if (!touching) {
                 myPlay.getCannon().lost(this.myPlay.getLife());
-                this.myPlay.setLife(this.myPlay.getLife() + 1);
+                myPlay.hit();
+
+                if (this.myPlay.getLife() >= 3) {
+                    this.myPlay.stop();
+                }
             }
             this.touching = true;
         } else this.touching = false;
+
         if (this.myPlay.getLife() >= 3) {
             this.myPlay.stop();
         }

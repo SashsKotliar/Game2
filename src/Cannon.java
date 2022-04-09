@@ -130,7 +130,10 @@ public class Cannon {
 
 
     public void moveTo(int direction) {
-        int movement = direction*Const.SPEED_PLAYER;
+        int movement = direction * Const.SPEED_PLAYER;
+        int futurePlace = body.getX() + movement;
+        if (futurePlace < 0 || Const.MAIN_WINDOW_W - body.getWidth() < futurePlace)
+            return;
         this.body.setX(this.body.getX() + movement);
         this.leftWheel.setX(this.leftWheel.getX() + movement);
         this.rightWheel.setX(this.rightWheel.getX() + movement);

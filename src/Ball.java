@@ -16,6 +16,16 @@ public class Ball extends Circle {
         this.hp = hp;
     }
 
+    public Ball(int x, int y, Color color) {
+        this(x, y, Const.START_HP_BALL, color);
+    }
+
+    public Ball(Ball ball) {
+        this(ball.getX(), ball.getY(), ball.hp, ball.getColor());
+        speedX = -ball.speedX;
+        speedY = ball.speedY;
+    }
+
     public Ball(int x, int y, int hp, Color color) {
         this(x,
                 y,
@@ -27,7 +37,7 @@ public class Ball extends Circle {
 
 
     private static int hpToSize(int hp) {
-        return 55 + 5 * hp;
+        return 30 + 8 * hp;
     }
 
     private static int getRandomDir() {
@@ -45,7 +55,7 @@ public class Ball extends Circle {
     }
 
     public boolean isDead() {
-        return hp == 0;
+        return hp <= 0;
     }
 
     public void flipX() {
@@ -67,10 +77,6 @@ public class Ball extends Circle {
     public void step() {
         this.setX(this.getX() + this.getSpeedX());
         this.setY(this.getY() + this.getSpeedY());
-    }
-
-    public int getHP() {
-        return hp;
     }
 
     public boolean isDown() {

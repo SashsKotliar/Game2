@@ -14,7 +14,7 @@ public class BasicJPanel extends JPanel {
     }
     public void title(String title,int y,int h){
         JLabel jLabel=new JLabel(title,SwingConstants.CENTER);
-        jLabel.setFont(Constance.FONT);
+        jLabel.setFont(Const.FONT);
         jLabel.setBounds(0,y,this.getWidth(),h);
         this.add(jLabel);
     }

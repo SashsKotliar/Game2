@@ -1,13 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 public class PlayPanel extends BasicJPanel {
     private Cannon cannon;
-    private KeyPressDetector spaceDetector;
-    private ArrayList<Bullet> bulletArrayList = new ArrayList<>();
+    private SpaceListener spaceDetector;
+    private ArrayList<Bullet> bullets = new ArrayList<>();
     private ArrayList<Ball> computerBall;
     private ArrayList<MyRunnable> allRunnableMethods = new ArrayList<>();
     private ImageIcon player;
@@ -20,9 +19,10 @@ public class PlayPanel extends BasicJPanel {
         this.computerBall = new ArrayList<>();
         this.cannon = new Cannon();
         this.g = new Ground();
-        this.spaceDetector = new KeyPressDetector();
-        MovementLoad movement = new MovementLoad(spaceDetector);
+        this.spaceDetector = new SpaceListener();
+        SpaceListener movement = new SpaceListener();
         this.addKeyListener(movement);
+        this.addKeyListener(spaceDetector);
         movePlayer();
         moveBullet();
         this.addLastBall();
@@ -40,8 +40,8 @@ public class PlayPanel extends BasicJPanel {
         return this.life;
     }
 
-    public ArrayList<Bullet> getBulletArrayList() {
-        return this.bulletArrayList;
+    public ArrayList<Bullet> getBullets() {
+        return this.bullets;
     }
 
     public void setLife(int life) {
@@ -49,7 +49,7 @@ public class PlayPanel extends BasicJPanel {
     }
 
     public void moveBullet() {
-        MoveBullet moveBullet = new MoveBullet(this, this.cannon, this.getBulletArrayList(), this.spaceDetector);
+        MoveBullet moveBullet = new MoveBullet(this, this.cannon, this.spaceDetector);
         this.allRunnableMethods.add(moveBullet);
         new Thread(moveBullet).start();
     }
@@ -67,24 +67,29 @@ public class PlayPanel extends BasicJPanel {
     }
 
     public void stop() {
-        BasicJPanel gameOver = new BasicJPanel(0, this.getHeight() / 2 - 100, this.getWidth(), 100, Color.RED);
-        gameOver.title("Game over!", 0, gameOver.getHeight());
-        this.add(gameOver);
         for (MyRunnable myRunnable : this.allRunnableMethods) {
             myRunnable.stop();
         }
+        BasicJPanel gameOver = new BasicJPanel(0, this.getHeight() / 2 - 100, this.getWidth(), 100, Color.RED);
+        gameOver.title("Game over!", 0, gameOver.getHeight());
+        this.add(gameOver);
+        this.repaint();
     }
 
     protected void paintComponent(Graphics g) {
-        synchronized (this) {
+        synchronized (computerBall) {
             super.paintComponent(g);
             this.cannon.paint(g);
             this.g.paint(g);
-            for (Ball ball : this.computerBall) {
-                ball.paint(g);
+            synchronized (computerBall) {
+                for (Ball ball : this.computerBall) {
+                    ball.paint(g);
+                }
             }
-            for (int i = 0; i < this.bulletArrayList.size(); i++) {
-                bulletArrayList.get(i).paint(g);
+            synchronized (bullets) {
+                for (Bullet bullet : this.bullets) {
+                    bullet.paint(g);
+                }
             }
             this.player.paintIcon(this, g, 0, 0);
         }
@@ -100,11 +105,8 @@ public class PlayPanel extends BasicJPanel {
 
     public Ball randomBall() {
         Random random = new Random();
-        Color[] colorMap = new Color[]{Color.red, Color.BLUE, Color.YELLOW, Color.PINK};
-        int randomColor = random.nextInt(3);
-        int x = random.nextInt(11) + 10;
-        Ball ball = new Ball(random.nextInt(getWidth() - 200) + 20, 20, x, colorMap[randomColor]);
-        return ball;
+        Color color = Color.getHSBColor((float)Math.random(), 1, (float)Math.random());
+        return new Ball(random.nextInt(getWidth() - 200) + 20, 20, color);
     }
 
     public void moveBall(Ball ball) {
@@ -117,7 +119,7 @@ public class PlayPanel extends BasicJPanel {
         ball.step();
     }
 
-    public void removeBalls(Collection<? extends Ball> ballsToRemove) {
-        this.computerBall.removeAll(ballsToRemove);
+    public void hit() {
+        life++;
     }
 }
