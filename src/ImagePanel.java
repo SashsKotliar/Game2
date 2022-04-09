@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
+import java.io.Serial;
+
 public class ImagePanel extends JPanel
 {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private Image image = null;
+    private Image image;
     private int iWidth2;
     private int iHeight2;
 
