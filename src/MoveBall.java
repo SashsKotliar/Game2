@@ -14,7 +14,7 @@ public class MoveBall extends MyRunnable {
             for (Ball ball : myPlay.getComputerBall()) {
                 myPlay.moveBall(ball);
             }
-            myPlay.getComputerBall().removeIf(ball -> ball.getWidth() == 0);
+            myPlay.getComputerBall().removeIf(ball -> ball.getW() == 0);
             if (myPlay.getComputerBall().size() <= 0) {
                 myPlay.addLastBall();
             }

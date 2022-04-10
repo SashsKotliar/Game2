@@ -1,55 +1,30 @@
 import java.awt.*;
 
-public class HalfC {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+public class HalfC extends ShapeDefined {
     private int statAngle;
     private int andAngle;
-    private Color color;
 
     public HalfC(int x, int y, int width, int height, int statAngle, int andAngle, Color color) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        super(x,y,width, height, color);
         this.statAngle = statAngle;
         this.andAngle = andAngle;
-        this.color = color;
     }
 
     public void paint(Graphics graphics) {
-        graphics.setColor(this.color);
-        graphics.fillArc(this.x, this.y, this.width, this.height, this.statAngle, this.andAngle);
+        graphics.setColor(this.getColor());
+        graphics.fillArc(this.getX(), this.getY(), this.getW(), this.getH(), this.statAngle, this.andAngle);
     }
 
     public void moveRight() {
-        this.x += Const.SPEED_PLAYER;
+        this.setX(this.getH()+Const.SPEED_PLAYER);
     }
 
     public void moveLeft() {
-        this.x -= Const.SPEED_PLAYER;
+        this.setX(this.getX()-Const.SPEED_PLAYER);
     }
 
     public void moveUp(int distance) {
-        this.y -= distance;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+        this.setY(this.getY()-distance);
     }
 
     public int getStatAngle() {
@@ -60,11 +35,5 @@ public class HalfC {
         return andAngle;
     }
 
-    public Color getColor() {
-        return color;
-    }
 
-    public void setX(int i) {
-        x = i;
-    }
 }

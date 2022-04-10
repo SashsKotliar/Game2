@@ -49,8 +49,8 @@ public class Ball extends Circle {
 
     public void hit() {
         this.hp--;
-        this.setHeight(hpToSize(this.hp));
-        this.setWidth(hpToSize(this.hp));
+        this.setH(hpToSize(this.hp));
+        this.setW(hpToSize(this.hp));
         up();
     }
 

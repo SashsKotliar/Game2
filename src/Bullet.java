@@ -61,8 +61,8 @@ public class Bullet {
     }
 
     public boolean collision(Ball ball) {
-        Rectangle ballCollision = new Rectangle(ball.getX(), ball.getY(), ball.getWidth(), ball.getHeight());
-        Rectangle headBullet = new Rectangle(this.bulletHead.getX(), this.bulletHead.getY(), this.bulletHead.getWidth(), this.bulletHead.getHeight());
+        Rectangle ballCollision = new Rectangle(ball.getX(), ball.getY(), ball.getW(), ball.getH());
+        Rectangle headBullet = new Rectangle(this.bulletHead.getX(), this.bulletHead.getY(), this.bulletHead.getW(), this.bulletHead.getH());
 
         return ballCollision.intersects(headBullet);
     }

@@ -10,15 +10,15 @@ public class PlayPanel extends BasicJPanel {
     private ArrayList<Ball> computerBall;
     private ArrayList<MyRunnable> allRunnableMethods = new ArrayList<>();
     private ImageIcon player;
-    private Ground g;
+//    private Ground g;
     private int life;
 
     public PlayPanel(int x, int y, int width, int height) {
-        super(x, y, width, height, Color.white);
+        super(x, y, width, height, Color.gray);
         this.setBounds(x, y, width, height);
         this.computerBall = new ArrayList<>();
         this.cannon = new Cannon();
-        this.g = new Ground();
+//        this.g = new Ground();
         this.spaceDetector = new SpaceListener();
         SpaceListener movement = new SpaceListener();
         this.addKeyListener(movement);
@@ -80,7 +80,7 @@ public class PlayPanel extends BasicJPanel {
         synchronized (computerBall) {
             super.paintComponent(g);
             this.cannon.paint(g);
-            this.g.paint(g);
+//            this.g.paint(g);
             synchronized (computerBall) {
                 for (Ball ball : this.computerBall) {
                     ball.paint(g);
@@ -110,8 +110,8 @@ public class PlayPanel extends BasicJPanel {
     }
 
     public void moveBall(Ball ball) {
-        int hw = ball.getWidth();
-        if (ball.getY() <= 0 || this.getHeight() - g.getGround().getHeight() - hw <= ball.getY())
+        int hw = ball.getW();
+        if (ball.getY() <= 0 || this.getHeight() - hw <= ball.getY())
             ball.flipY();
         if (ball.getX() <= 0 || this.getWidth() <= ball.getX() + hw - 10)
             ball.flipX();
