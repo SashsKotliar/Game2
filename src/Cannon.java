@@ -31,16 +31,9 @@ public class Cannon {
 
     private ArrayList<ShapeDefined> allMyBody;
     private MyRectangle body;
-    private HalfC rightWing;
-    private HalfC leftWing;
-    private Circle leftWheel;
-    private Circle rightWheel;
     private Circle[] life;
-    private Circle life1;
-    private Circle life2;
-    private Circle life3;
     private Bullet bullet;
-    private ImageIcon player;
+
 
 
     public Cannon() {
@@ -76,34 +69,6 @@ public class Cannon {
         }
     }
 
-    public void moveUp() {
-        this.bullet.moveUp();
-    }
-
-    public void moveRight() {
-        for (ShapeDefined shape:this.allMyBody) {
-            shape.moveRight();
-        }
-        for (int i = 0; i <life.length ; i++) {
-            life[i].moveRight();
-        }
-        this.bullet.moveRight();
-    }
-
-    public void moveLeft() {
-        for (ShapeDefined shape:this.allMyBody) {
-            shape.moveLeft();
-        }
-        for (int i = 0; i <life.length ; i++) {
-            life[i].moveLeft();
-        }
-        this.bullet.moveLeft();
-    }
-
-
-    public void newBullet() {
-        this.bullet = new Bullet(this.getBodyX() + 25, this.getBodyY());
-    }
 
     public boolean checkCollision(Ball ball) {
         boolean collision = false;
