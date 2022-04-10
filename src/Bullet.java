@@ -10,11 +10,10 @@ public class Bullet {
 
     private MyRectangle body;
     private HalfC bulletHead;
-    private int direction3;
 
     public Bullet() {
-        this.body = new MyRectangle(X, Y, WIDTH, HEIGHT, Color.blue);
-        this.bulletHead = new HalfC(X, Y - 7, WIDTH, HEIGHT, 360, 180, Color.CYAN);
+        this.body = new MyRectangle((Const.MAIN_WINDOW_W - Cannon.GUN_W) / 2, Const.MAIN_WINDOW_H-100-10-Cannon.GUN_H, WIDTH, HEIGHT, Color.blue);
+        this.bulletHead = new HalfC(body.getX(), body.getY() - 7, WIDTH, HEIGHT, 360, 180, Color.CYAN);
     }
 
 
@@ -29,32 +28,11 @@ public class Bullet {
 
     }
 
-    public HalfC getBulletHead() {
-        return bulletHead;
-    }
-
-    public void moveRight() {
-        this.body.moveRight();
-        this.bulletHead.moveRight();
-    }
-
-    public void moveLeft() {
-        this.body.moveLeft();
-        this.bulletHead.moveLeft();
-    }
-
     public void moveUp() {
         this.body.moveUp(Const.BULLET_SPEED);
         this.bulletHead.moveUp(Const.BULLET_SPEED);
     }
 
-    public int getDirection3() {
-        return direction3;
-    }
-
-    public void setDirection3(int direction3) {
-        this.direction3 = direction3;
-    }
 
     public MyRectangle getBody() {
         return body;
