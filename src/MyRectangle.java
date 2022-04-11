@@ -11,11 +11,4 @@ public class MyRectangle extends ShapeDefined{
         graphics.fillRect(this.getX(), this.getY(), this.getW(), this.getH());
     }
 
-    public void moveRight() {
-        this.setX(this.getX()+Const.SPEED_PLAYER);
-    }
-
-    public void moveLeft() {
-        this.setX(this.getX()-Const.SPEED_PLAYER);
-    }
 }

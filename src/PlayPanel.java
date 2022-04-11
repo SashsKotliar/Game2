@@ -5,49 +5,64 @@ import java.util.Random;
 
 public class PlayPanel extends BasicJPanel {
     public static final int START_LIVES = 3;
-//    private Cannon111 cannon;
+
     private SpaceListener spaceDetector;
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private ArrayList<Bullet> bullets;
     private ArrayList<Ball> computerBall;
-    private ArrayList<MyRunnable> allRunnableMethods = new ArrayList<>();
-    private ImageIcon player;
+    private ArrayList<MyRunnable> allRunnableMethods;
     private int spentLives;
     private Cannon cannon;
     private int points;
-    private JLabel score;
-    private JLabel livesLeft;
+    private int level;
+    private JLabel levelText;
+    private ImageIcon imageIcon;
+
 
     public PlayPanel(int x, int y, int width, int height) {
-        super(x, y, width, height, Color.gray);
+        super(x, y, width, height, Color.WHITE);
         this.setBounds(x, y, width, height);
         this.computerBall = new ArrayList<>();
+        this.bullets=new ArrayList<>();
+        this.allRunnableMethods=new ArrayList<>();
         this.cannon = new Cannon(this.getWidth(),this.getHeight());
         this.spaceDetector = new SpaceListener();
         SpaceListener movement = new SpaceListener();
+        this.spentLives = 0;
+        this.points = 0;
+        this.level=1;
+        this.imageIcon= new ImageIcon("ff76983a-95d0-47bb-be96-1d212961f46d.jpg");
         this.addKeyListener(movement);
         this.addKeyListener(spaceDetector);
+       initPlay();
+
+    }
+    public void initPlay(){
         movePlayer();
         moveBullet();
         this.addLastBall();
         moveComputerBallLoop();
-        this.spentLives = 0;
-        this.player = new ImageIcon("assets/blob_https___224b5342-5b33-465f-b23c-7ef161095e5c.poki-gdn.com_76b8e865-5ebf-40ff-a2c2-f0772e351730");
-        this.points = 0;
-        this.score = new JLabel("Score: " + (this.points));
-        this.score.setBounds(Const.MAIN_WINDOW_W - 100, Const.MAIN_WINDOW_H - 430, 100, 100);
-        this.add(this.score);
-        this.livesLeft = new JLabel("Lives left: " + (START_LIVES - this.spentLives));
-        this.livesLeft.setBounds(Const.MAIN_WINDOW_W - 100, Const.MAIN_WINDOW_H - 400, 100, 100);
-        this.add(this.livesLeft);
+        message();
 
     }
-
-    public int getPoints() {
-        return points;
+    public void  setLevelText(){
+        this.levelText.setText("Level  :"+this.level+"\n"+"   Lives left: "+(START_LIVES - this.spentLives)
+        +"   Score: "+this.points);
     }
-
+    public void message(){
+        this.levelText=new JLabel("Level: "+this.level+"    Lives left: "+(START_LIVES - this.spentLives)
+                +"   Score: "+this.points,SwingConstants.CENTER);
+        levelText.setBounds(0,0,this.getWidth(),Const.FONT.getSize());
+        levelText.setFont(Const.FONT);
+        levelText.setForeground(Color.green.darker());
+        this.add(levelText);
+    }
     public void setPoints() {
         this.points++;
+        setLevelText();
+    }
+    public void setLevel(){
+        this.level++;
+        setLevelText();
     }
 
     public Cannon getCannon() {
@@ -62,9 +77,6 @@ public class PlayPanel extends BasicJPanel {
         return this.bullets;
     }
 
-    public void setLife(int life) {
-        this.spentLives = life;
-    }
 
     public void moveBullet() {
         MoveBullet moveBullet = new MoveBullet(this, this.cannon, this.spaceDetector);
@@ -97,8 +109,8 @@ public class PlayPanel extends BasicJPanel {
     protected void paintComponent(Graphics g) {
         synchronized (computerBall) {
             super.paintComponent(g);
+            this.imageIcon.paintIcon(this,g,-25,0);
             this.cannon.paint(g);
-//            this.g.paint(g);
             synchronized (computerBall) {
                 for (Ball ball : this.computerBall) {
                     ball.paint(g);
@@ -109,15 +121,8 @@ public class PlayPanel extends BasicJPanel {
                     bullet.paint(g);
                 }
             }
-            this.player.paintIcon(this, g, 0, 0);
         }
         this.cannon.paint(g);
-    }
-    public void setLivesLeft(){
-        this.livesLeft.setText("Live left: "+(START_LIVES-this.spentLives));
-    }
-    public void setPointsPlayer(){
-        this.score.setText("Score: "+this.points);
     }
 
     public ArrayList<Ball> getComputerBall() {
@@ -146,5 +151,6 @@ public class PlayPanel extends BasicJPanel {
 
     public void hit() {
         spentLives++;
+        this.setLevelText();
     }
 }

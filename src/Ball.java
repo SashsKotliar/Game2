@@ -4,20 +4,25 @@ import java.util.Random;
 
 public class Ball extends Circle {
     private int hp;
-    private int speedX = 2;
-    private int speedY = -4;
+    private static final int START_SPEED_X=2;
+    private static final int START_SPEED_Y=-4;
+    private  static int startHp=1;
     private static final Random random = new Random();
+
+    private int speedX;
+    private int speedY;
+
 
     private Ball(int x, int y, int hp, Color color, int directionX, int directionY) {
         super(x, y, hpToSize(hp), hpToSize(hp), color);
         assert Math.abs(directionX * directionY) != 1;
-        speedX *= directionX;
-        speedY *= directionY;
+        speedX=START_SPEED_X* directionX;
+        speedY =START_SPEED_Y* directionY;
         this.hp = hp;
     }
 
     public Ball(int x, int y, Color color) {
-        this(x, y, Const.START_HP_BALL, color);
+        this(x, y, startHp++, color);
     }
 
     public Ball(Ball ball) {

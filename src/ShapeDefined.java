@@ -17,25 +17,10 @@ public abstract class ShapeDefined {
         this.color = color;
     }
 
-    public void moveRight() {
-        this.x += Const.SPEED_PLAYER;
-    }
-
-    public void moveLeft() {
-        this.x -= Const.SPEED_PLAYER;
-    }
-
-    public void moveUp() {
-        this.y--;
-    }
-
     public void moveUp(int distance) {
         this.y -= distance;
     }
 
-    public void moveDown() {
-        this.y++;
-    }
 
     public int getX() {
         return x;

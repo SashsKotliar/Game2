@@ -12,7 +12,8 @@ public class BasicJPanel extends JPanel {
         this.setDoubleBuffered(true);
         this.setVisible(true);
     }
-    public void title(String title,int y,int h){
+
+    public void title(String title, int y, int h){
         JLabel jLabel=new JLabel(title,SwingConstants.CENTER);
         jLabel.setFont(Const.FONT);
         jLabel.setBounds(0,y,this.getWidth(),h);

@@ -34,7 +34,7 @@ public class MovePlayer extends MyRunnable {
             if (!touching) {
                 myPlay.getCannon().lost(this.myPlay.getLife());
                 myPlay.hit();
-                myPlay.setLivesLeft();
+//                myPlay.setLivesLeft();
 
                 if (this.myPlay.getLife() >= 3) {
                     this.myPlay.stop();

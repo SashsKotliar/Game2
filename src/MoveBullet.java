@@ -5,7 +5,6 @@ public class MoveBullet extends MyRunnable {
 
     private SpaceListener spaceDetector;
     private ArrayList<Bullet> bullets;
-    private boolean touching;
 
 
     public MoveBullet(PlayPanel myPlay, Cannon cannon, SpaceListener spaceDetector) {
@@ -13,13 +12,12 @@ public class MoveBullet extends MyRunnable {
         this.cannon = cannon;
         this.bullets = myPlay.getBullets();
         this.spaceDetector = spaceDetector;
-        this.touching = false;
     }
 
     @Override
     public void _run() {
         if (spaceDetector.isPressed()) {
-            Bullet bullet = new Bullet(cannon.getBodyX() + 25, cannon.getBodyY());
+            Bullet bullet = new Bullet(cannon.getBodyX() + Cannon.CANNON_W/2, cannon.getBodyY());
             synchronized (bullets) {
                 if (this.bullets.size() == 0)
                     this.bullets.add(bullet);
@@ -44,7 +42,8 @@ public class MoveBullet extends MyRunnable {
                         if (bullet.collision(ball)) {
                             ball.hit();
                             myPlay.setPoints();
-                            myPlay.setPointsPlayer();
+//                            myPlay.setPoints();
+//                            myPlay.setPointsPlayer();
                             bulletsToRemove.add(bullet);
                             if (ball.isDead()) {
                                 ballsToRemove.add(ball);
