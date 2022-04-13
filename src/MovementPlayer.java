@@ -3,13 +3,13 @@ import java.awt.event.KeyListener;
 import java.util.Stack;
 
 public class MovementPlayer implements KeyListener {
-    private Cannon player;
+    private MyAlien player;
 
     private Stack<Integer> pressedKeys = new Stack<>();
     private static final int ZERO = (KeyEvent.VK_LEFT + KeyEvent.VK_RIGHT) / 2;
 
 
-    public MovementPlayer(Cannon player) {
+    public MovementPlayer(MyAlien player) {
         this.player = player;
         pressedKeys.push(ZERO);
     }

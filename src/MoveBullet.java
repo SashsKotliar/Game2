@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class MoveBullet extends MyRunnable {
-    private Cannon cannon;
+    private MyAlien alien;
 
     private SpaceListener spaceDetector;
     private ArrayList<Bullet> bullets;
 
 
-    public MoveBullet(PlayPanel myPlay, Cannon cannon, SpaceListener spaceDetector) {
+    public MoveBullet(PlayPanel myPlay, MyAlien alien, SpaceListener spaceDetector) {
         super(myPlay);
-        this.cannon = cannon;
+        this.alien = alien;
         this.bullets = myPlay.getBullets();
         this.spaceDetector = spaceDetector;
     }
@@ -17,10 +17,13 @@ public class MoveBullet extends MyRunnable {
     @Override
     public void _run() {
         if (spaceDetector.isPressed()) {
-            Bullet bullet = new Bullet(cannon.getBodyX() + Cannon.CANNON_W/2, cannon.getBodyY());
+            Bullet bullet1 = new Bullet(alien.getGun1().getX(), alien.getGun1().getY());
+            Bullet bullet2 = new Bullet(alien.getGun2().getX(), alien.getGun2().getY());
             synchronized (bullets) {
-                if (this.bullets.size() == 0)
-                    this.bullets.add(bullet);
+                if (this.bullets.size() == 0) {
+                    this.bullets.add(bullet1);
+                    this.bullets.add(bullet2);
+                }
             }
         }
         ArrayList<Ball> balls = myPlay.getComputerBall();

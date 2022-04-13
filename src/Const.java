@@ -4,7 +4,7 @@ public class Const {
     public static final int SPEED_PLAYER = 10;
     public static final int BULLET_SPEED = 30;
 
-    public static final int MAIN_WINDOW_W = 600;
+    public static final int MAIN_WINDOW_W = 1000;
     public static final int MAIN_WINDOW_H = 600;
     public static final int BUTTON_W = 150;
     public static final int BUTTON_H = 100;

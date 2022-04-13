@@ -41,8 +41,12 @@ public class Ball extends Circle {
     }
 
 
-    private static int hpToSize(int hp) {
+    public static int hpToSize(int hp) {
         return 30 + 8 * hp;
+    }
+
+    public int getHp() {
+        return hp;
     }
 
     private static int getRandomDir() {

@@ -2,15 +2,15 @@ import java.util.ArrayList;
 
 public class MovePlayer extends MyRunnable {
     private MovementPlayer movementPlayer;
-    private Cannon cannon;
+    private MyAlien alien;
     private boolean touching = false;
 
-    public MovePlayer(PlayPanel playPanel, Cannon myCannon) {
+    public MovePlayer(PlayPanel playPanel, MyAlien myAlien) {
         super(playPanel);
-        this.cannon = myCannon;
+        this.alien = myAlien;
 
 
-        movementPlayer = new MovementPlayer(this.cannon);
+        movementPlayer = new MovementPlayer(this.alien);
         myPlay.setFocusable(true);
         myPlay.setVisible(true);
         myPlay.requestFocus();
@@ -19,12 +19,12 @@ public class MovePlayer extends MyRunnable {
 
     @Override
     public void _run() {
-        cannon.moveTo(movementPlayer.getDirection());
+        alien.moveTo(movementPlayer.getDirection());
         ArrayList<Ball> balls = this.myPlay.getComputerBall();
         boolean lost = false;
         synchronized (balls) {
             for (Ball ball : balls) {
-                if (this.myPlay.getCannon().checkCollision(ball)) {
+                if (this.myPlay.getAlien().checkCollision(ball)) {
                     lost = true;
                     break;
                 }
@@ -32,7 +32,7 @@ public class MovePlayer extends MyRunnable {
         }
         if (lost) {
             if (!touching) {
-                myPlay.getCannon().lost(this.myPlay.getLife());
+                myPlay.getAlien().lost(this.myPlay.getLife());
                 myPlay.hit();
 //                myPlay.setLivesLeft();
 

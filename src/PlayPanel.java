@@ -11,11 +11,12 @@ public class PlayPanel extends BasicJPanel {
     private ArrayList<Ball> computerBall;
     private ArrayList<MyRunnable> allRunnableMethods;
     private int spentLives;
-    private Cannon cannon;
+    //private Cannon cannon;
+    private MyAlien alien;
     private int points;
     private int level;
     private JLabel levelText;
-    private ImageIcon imageIcon;
+    private final ImageIcon imageIcon = new ImageIcon("C:\\Users\\Sasha\\Desktop\\תואר ראשון\\שנה 1 סמסטר א\\מבוא למדעי המחשב א\\GameBack.jpg");
 
 
     public PlayPanel(int x, int y, int width, int height) {
@@ -24,16 +25,16 @@ public class PlayPanel extends BasicJPanel {
         this.computerBall = new ArrayList<>();
         this.bullets=new ArrayList<>();
         this.allRunnableMethods=new ArrayList<>();
-        this.cannon = new Cannon(this.getWidth(),this.getHeight());
+        //this.cannon = new Cannon(this.getWidth(),this.getHeight());
+        this.alien = new MyAlien();
         this.spaceDetector = new SpaceListener();
         SpaceListener movement = new SpaceListener();
         this.spentLives = 0;
         this.points = 0;
         this.level=1;
-        this.imageIcon= new ImageIcon("ff76983a-95d0-47bb-be96-1d212961f46d.jpg");
         this.addKeyListener(movement);
         this.addKeyListener(spaceDetector);
-       initPlay();
+        initPlay();
 
     }
     public void initPlay(){
@@ -65,8 +66,8 @@ public class PlayPanel extends BasicJPanel {
         setLevelText();
     }
 
-    public Cannon getCannon() {
-        return this.cannon;
+    public MyAlien getAlien() {
+        return this.alien;
     }
 
     public int getLife() {
@@ -79,13 +80,13 @@ public class PlayPanel extends BasicJPanel {
 
 
     public void moveBullet() {
-        MoveBullet moveBullet = new MoveBullet(this, this.cannon, this.spaceDetector);
+        MoveBullet moveBullet = new MoveBullet(this, this.alien, this.spaceDetector);
         this.allRunnableMethods.add(moveBullet);
         new Thread(moveBullet).start();
     }
 
     public void movePlayer() {
-        MovePlayer movementPlayer = new MovePlayer(this, this.cannon);
+        MovePlayer movementPlayer = new MovePlayer(this, this.alien);
         this.allRunnableMethods.add(movementPlayer);
         new Thread(movementPlayer).start();
     }
@@ -110,7 +111,7 @@ public class PlayPanel extends BasicJPanel {
         synchronized (computerBall) {
             super.paintComponent(g);
             this.imageIcon.paintIcon(this,g,-25,0);
-            this.cannon.paint(g);
+            this.alien.paint(g);
             synchronized (computerBall) {
                 for (Ball ball : this.computerBall) {
                     ball.paint(g);
@@ -122,7 +123,8 @@ public class PlayPanel extends BasicJPanel {
                 }
             }
         }
-        this.cannon.paint(g);
+        //this.cannon.paint(g);
+        this.alien.paint(g);
     }
 
     public ArrayList<Ball> getComputerBall() {
@@ -141,9 +143,9 @@ public class PlayPanel extends BasicJPanel {
 
     public void moveBall(Ball ball) {
         int hw = ball.getW();
-        if (ball.getY() <= 0 || this.getHeight() - hw <= ball.getY())
+        if (ball.getY() <= 0 || this.getHeight()<= ball.getY() + hw)
             ball.flipY();
-        if (ball.getX() <= 0 || this.getWidth() <= ball.getX() + hw - 10)
+        if (ball.getX() <= 0 || this.getWidth() <= ball.getX() + hw)
             ball.flipX();
 
         ball.step();
