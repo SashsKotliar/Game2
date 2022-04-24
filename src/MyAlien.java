@@ -8,6 +8,7 @@ public class MyAlien {
     private Circle[] life;
     private MyRectangle gun1;
     private MyRectangle gun2;
+    private MyRectangle gun3;
     //private MyRectangle [] gun;
     public final static int CRAFT_W = 150;
     public final static int CRAFT_H = 80;
@@ -47,6 +48,8 @@ public class MyAlien {
     public final static int GUN2_X =CRAFT_X + CRAFT_W - GUN_W;
     public final static int GUN2_Y = CRAFT_Y + CRAFT_H/2 - GUN_H;
     public final static int GUN1_Y = GUN2_Y;
+    public final static int GUN3_X = CRAFT_X + CRAFT_W/2 - GUN_W/2;
+    public final static int GUN3_Y = GUN2_Y;
 
 
 
@@ -67,6 +70,7 @@ public class MyAlien {
         this.life = new Circle[]{life1, life2, life3};
         this.gun1 = new MyRectangle(CRAFT_X, GUN1_Y, GUN_W, GUN_H, Color.BLACK);
         this.gun2 = new MyRectangle(GUN2_X, GUN2_Y, GUN_W, GUN_H, Color.BLACK);
+        this.gun3 = new MyRectangle(GUN3_X, GUN3_Y, GUN_W, GUN_H, null);
        // this.gun = new MyRectangle[]{gun1, gun2};
     }
 
@@ -75,6 +79,9 @@ public class MyAlien {
     }
     public MyRectangle getGun2() {
         return gun2;
+    }
+    public MyRectangle getGun3(){
+        return  gun3;
     }
 
     public void setBodyX(int x){
@@ -115,6 +122,7 @@ public class MyAlien {
         }
         this.gun1.setX(this.gun1.getX() + movement);
         this.gun2.setX(this.gun2.getX() + movement);
+        this.gun3.setX(this.gun3.getX() + movement);
         this.body.setX(this.body.getX() + movement);
     }
 

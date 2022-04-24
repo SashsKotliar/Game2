@@ -19,10 +19,12 @@ public class MoveBullet extends MyRunnable {
         if (spaceDetector.isPressed()) {
             Bullet bullet1 = new Bullet(alien.getGun1().getX(), alien.getGun1().getY());
             Bullet bullet2 = new Bullet(alien.getGun2().getX(), alien.getGun2().getY());
+            Bullet bullet3 = new Bullet(alien.getGun3().getX(), alien.getGun3().getY());
             synchronized (bullets) {
                 if (this.bullets.size() == 0) {
                     this.bullets.add(bullet1);
                     this.bullets.add(bullet2);
+                    this.bullets.add(bullet3);
                 }
             }
         }
